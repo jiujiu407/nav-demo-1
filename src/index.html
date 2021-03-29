@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,
+    minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+    <title>前航-前端导航网站</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="globalHeader">
+        <form class="searchForm" method="get" 
+        action="https://www.baidu.com/s">
+            <input name="wd" type="text" id="inp">
+        <button type="submit">搜索</button>
+        </form>
+    </header>
+    <main class="globalMain">
+        <ul class="siteList">
+            <li class="last">
+                <div class="addButton">
+                    <div class="icon-wrapper">
+                        <svg class="icon" >
+                            <use xlink:href="#icon-add"></use>
+                        </svg>
+                    </div>
+                    <div class="text">新增网站</div>
+                </div>
+            </li>
+        </ul>
+    </main>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="//at.alicdn.com/t/font_2385114_lh6h0tgdwbn.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>
