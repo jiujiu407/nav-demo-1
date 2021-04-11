@@ -117,78 +117,79 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"main.js":[function(require,module,exports) {
-var $siteList = $('.siteList');
-var $lastLi = $siteList.find('li.last');
-var x = localStorage.getItem('x');
-var xObject = JSON.parse(x);
-var hashMap = xObject || [{
-  logo: 'A',
-  url: 'https://www.acfun.cn'
-}, {
-  logo: 'B',
-  url: 'https://www.bilibili.com'
-}];
+})({"../../../../../../Program Files/nodejs/node_global/node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
+var bundleURL = null;
 
-var simplifyUrl = function simplifyUrl(url) {
-  // replace() 方法用于在字符串中用一些字符替换另一些字符
-  return url.replace('https://', '').replace('http://', '').replace('www.', '') // 删除/开头的内容
-  .replace('/\/.*/', '');
-};
-
-var render = function render() {
-  $siteList.find('li:not(.last)').remove();
-  hashMap.forEach(function (node, index) {
-    var $li = $("<li>\n           <div class=\"site\">\n           <div class=\"logo\">".concat(node.logo, "</div>\n           <div class=\"link\">").concat(simplifyUrl(node.url), "</div>\n           <div class=\"close\"><svg class=\"icon\">\n           <use xlink:href=\"#icon-searchclose\"></use>\n       </svg></div>\n           </div>\n              </li>")).insertBefore($lastLi);
-    $li.on('click', function () {
-      window.open(node.url);
-    });
-    $li.on('click', '.close', function (e) {
-      e.stopPropagation();
-      console.log(index);
-      hashMap.splice(index, 1);
-      render();
-    });
-  });
-};
-
-render();
-$('.addButton').on('click', function () {
-  var url = window.prompt("请输入你要添加的网址");
-
-  if (url.indexOf('http') !== 0) {
-    url = 'https://' + url;
+function getBundleURLCached() {
+  if (!bundleURL) {
+    bundleURL = getBundleURL();
   }
 
-  console.log(url);
-  hashMap.push({
-    logo: simplifyUrl(url)[0].toUpperCase(),
-    url: url
-  });
-  render();
-}); // 窗口关闭时触发
+  return bundleURL;
+}
 
-window.onbeforeunload = function () {
-  var string = JSON.stringify(hashMap); //   在本地的存储里设置一个x,其值为string
+function getBundleURL() {
+  // Attempt to find the URL of the current script and use that as the base URL
+  try {
+    throw new Error();
+  } catch (err) {
+    var matches = ('' + err.stack).match(/(https?|file|ftp|chrome-extension|moz-extension):\/\/[^)\n]+/g);
 
-  localStorage.setItem('x', string);
-}; // toLowerCase小写
-
-
-$(document).on('keypress', function (e) {
-  var key = e.key;
-
-  for (var i = 0; i < hashMap.length; i++) {
-    if (hashMap[i].logo.toLowerCase() === key) {
-      window.open(hashMap[i].url);
+    if (matches) {
+      return getBaseURL(matches[0]);
     }
   }
-}); // 阻止输入框事件键盘事件冒泡
 
-$('.searchForm').on('keypress', function (e) {
-  e.stopPropagation();
-});
-},{}],"../../../../../../Program Files/nodejs/node_global/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+  return '/';
+}
+
+function getBaseURL(url) {
+  return ('' + url).replace(/^((?:https?|file|ftp|chrome-extension|moz-extension):\/\/.+)\/[^/]+$/, '$1') + '/';
+}
+
+exports.getBundleURL = getBundleURLCached;
+exports.getBaseURL = getBaseURL;
+},{}],"../../../../../../Program Files/nodejs/node_global/node_modules/parcel-bundler/src/builtins/css-loader.js":[function(require,module,exports) {
+var bundle = require('./bundle-url');
+
+function updateLink(link) {
+  var newLink = link.cloneNode();
+
+  newLink.onload = function () {
+    link.remove();
+  };
+
+  newLink.href = link.href.split('?')[0] + '?' + Date.now();
+  link.parentNode.insertBefore(newLink, link.nextSibling);
+}
+
+var cssTimeout = null;
+
+function reloadCSS() {
+  if (cssTimeout) {
+    return;
+  }
+
+  cssTimeout = setTimeout(function () {
+    var links = document.querySelectorAll('link[rel="stylesheet"]');
+
+    for (var i = 0; i < links.length; i++) {
+      if (bundle.getBaseURL(links[i].href) === bundle.getBundleURL()) {
+        updateLink(links[i]);
+      }
+    }
+
+    cssTimeout = null;
+  }, 50);
+}
+
+module.exports = reloadCSS;
+},{"./bundle-url":"../../../../../../Program Files/nodejs/node_global/node_modules/parcel-bundler/src/builtins/bundle-url.js"}],"style.e308ff8e.39d28eae.11ecc343.css":[function(require,module,exports) {
+var reloadCSS = require('_css_loader');
+
+module.hot.dispose(reloadCSS);
+module.hot.accept(reloadCSS);
+},{"_css_loader":"../../../../../../Program Files/nodejs/node_global/node_modules/parcel-bundler/src/builtins/css-loader.js"}],"../../../../../../Program Files/nodejs/node_global/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -216,7 +217,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51941" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51901" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
@@ -392,5 +393,5 @@ function hmrAcceptRun(bundle, id) {
     return true;
   }
 }
-},{}]},{},["../../../../../../Program Files/nodejs/node_global/node_modules/parcel-bundler/src/builtins/hmr-runtime.js","main.js"], null)
-//# sourceMappingURL=/main.1f19ae8e.js.map
+},{}]},{},["../../../../../../Program Files/nodejs/node_global/node_modules/parcel-bundler/src/builtins/hmr-runtime.js"], null)
+//# sourceMappingURL=/style.e308ff8e.39d28eae.11ecc343.95176e72.js.map
